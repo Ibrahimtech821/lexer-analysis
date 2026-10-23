@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-Token=namedtuple("Token","lexeme token")
+Token=namedtuple("Token","lexeme token line column")
 
 errors=[]
 
