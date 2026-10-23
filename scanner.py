@@ -1,10 +1,14 @@
 from tokentable import Token, report_error
 from tokentable import errors
-def advance_pos(line, column, char):
-    if char == '\n':
-        return line + 1, 1
-    else:
-        return line, column + 1
+
+def advance_pos(source_code,line, column):
+    for c in source_code:
+        if c == '\n':
+            line += 1
+            column = 1
+        else:
+            column += 1
+    return line, column
 
 def scan(source_code):
     tokens = []
