@@ -1,0 +1,3 @@
+int age = 20;
+String s = "Hi"; // done
+1x = 5 @ 2;

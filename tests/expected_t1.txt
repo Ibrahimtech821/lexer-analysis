@@ -1,0 +1,22 @@
+Lexeme: int, Token: INT
+Lexeme: age, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 20, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: s, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "Hi", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: =, Token: ASSIGN
+Lexeme: 5, Token: NUMBER
+Lexeme: 2, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+
+Symbol Table
+age | IDENTIFIER | line 1, col 5
+s | IDENTIFIER | line 2, col 8
+
+Errors
+Error: invalid identifier '1x' at line 3, column 1.
+Error: invalid character '@' at line 3, column 8.
