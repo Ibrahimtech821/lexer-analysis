@@ -1,4 +1,4 @@
-from tokentable import Token, report_error
+from tokentable import Token, report_error, advance_pos
 OPERATORS = {
     "==": "LOGOP",
     "!=": "LOGOP",
@@ -15,6 +15,13 @@ OPERATORS = {
     "*": "MATHOP",
     "/": "MATHOP",
     "%": "MATHOP",
+    "+=": "ADDASSIGN",
+    "-=": "SUBASSIGN",
+    "*=": "MULASSIGN",
+    "/=": "DIVASSIGN",
+    "%=": "MODASSIGN",
+    "++": "INC",
+    "--": "DEC",
 }
 DELIMITERS = {
     "(": "LPAR",
@@ -27,14 +34,6 @@ DELIMITERS = {
     ",": "COMMA",
     ".": "DOT",
 }
-def _advance(source_code, line, column):
-    for char in source_code:
-        if char == "\n":
-            line += 1
-            column = 1
-        else:
-            column += 1
-    return line, column
 
 def _scan_string(source_code, i, line, column):
     start_i = i
@@ -47,12 +46,12 @@ def _scan_string(source_code, i, line, column):
         if char == quote:
             i += 1
             lexeme = source_code[start_i:i]
-            line, column = _advance(lexeme, line, column)
+            line, column = advance_pos(line, column, lexeme)
             return Token(lexeme, "STRING", start_line, start_column), i, line, column
         if char in "\r\n":
             report_error(start_line, start_column, "unclosed string literal starting")
             lexeme = source_code[start_i:i]
-            line, column = _advance(lexeme, line, column)
+            line, column = advance_pos(line, column, lexeme)
             return None, i, line, column
         if (
             char == "\\"
@@ -65,7 +64,7 @@ def _scan_string(source_code, i, line, column):
 
     report_error(start_line, start_column, "unclosed string literal starting")
     lexeme = source_code[start_i:i]
-    line, column = _advance(lexeme, line, column)
+    line, column = advance_pos(line, column, lexeme)
     return None, i, line, column
 
 def _scan_comment(source_code, i, line, column):
@@ -83,7 +82,7 @@ def _scan_comment(source_code, i, line, column):
         else:
             i = end + 2
 
-    line, column = _advance(source_code[start_i:i], line, column)
+    line, column = advance_pos(line, column, source_code[start_i:i])
     return None, i, line, column
 
 def scan_symbol(source_code, i, line, column):
@@ -98,11 +97,11 @@ def scan_symbol(source_code, i, line, column):
     for lexeme in sorted(OPERATORS, key=len, reverse=True):
         if source_code.startswith(lexeme, i):
             end = i + len(lexeme)
-            line, column = _advance(lexeme, line, column)
+            line, column = advance_pos(line, column, lexeme)
             return Token(lexeme, OPERATORS[lexeme], start_line, start_column), end, line, column
 
     lexeme = source_code[i]
     if lexeme in DELIMITERS:
-        line, column = _advance(lexeme, line, column)
+        line, column = advance_pos(line, column, lexeme)
         return Token(lexeme, DELIMITERS[lexeme], start_line, start_column), i + 1, line, column
     return None

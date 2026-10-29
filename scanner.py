@@ -1,16 +1,7 @@
-from tokentable import Token, report_error
-from tokentable import errors
-from words import scan_word, scan_number, symbol_table
+from tokentable import Token, report_error, advance_pos,errors
+from words import scan_word, scan_number, symbol_table, update_symbol_table
 from symbols import scan_symbol
 
-def advance_pos(source_code,line, column):
-    for c in source_code:
-        if c == '\n':
-            line += 1
-            column = 1
-        else:
-            column += 1
-    return line, column
 
 def scan(source_code):
     tokens = []
@@ -18,7 +9,7 @@ def scan(source_code):
     while i < len(source_code):
         c=source_code[i]
         if c in " \n\t\r":
-            line,column=advance_pos(c,line,column)
+            line,column=advance_pos(line,column,c)
             i+=1
         elif c.isalpha() or c == '_':
             token, i, line, column = scan_word(source_code, i, line, column)
@@ -31,12 +22,13 @@ def scan(source_code):
             result = scan_symbol(source_code, i, line, column)
             if result is None:
                 report_error(line, column, f"invalid character '{c}'")
-                line,column=advance_pos(c,line,column)
+                line,column=advance_pos(line,column,c)
                 i+=1
             else:
                 token, i, line, column = result
                 if token is not None:
                     tokens.append(token)
+    update_symbol_table(tokens)
     return tokens
 def print_results_table(tokens, errors):
     print("=" * 65)
