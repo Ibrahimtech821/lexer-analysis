@@ -36,6 +36,8 @@ def main():
             "tests/t4_string.txt",
             "tests/t5_comment.txt",
             "tests/t6_valid.txt",
+            "tests/t6_multiline.txt",
+            "tests/t7_dup.txt"
         ]
         for filepath in test_files:
             run_file(filepath)

@@ -12,6 +12,8 @@ TEST_FILES = [
     ("t4_string.txt", "tests/t4_string.txt"),
     ("t5_comment.txt", "tests/t5_comment.txt"),
     ("t6_valid.txt", "tests/t6_valid.txt"),
+    ("t6_multiline.txt", "tests/t6_multiline.txt"),
+    ("t7_dup.txt", "tests/t7_dup.txt")
 ]
 
 
