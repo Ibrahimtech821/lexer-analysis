@@ -3,11 +3,14 @@ from tokentable import Token, report_error
 KEYWORDS = {
     "class": "CLASS",
     "public": "PUBLIC",
+    "private": "PRIVATE",
     "static": "STATIC",
     "void": "VOID",
     "main": "MAIN",
     "int": "INT",
+    "long": "LONG",
     "float": "FLOAT",
+    "double": "DOUBLE",
     "boolean": "BOOLEAN_TYPE",
     "char": "CHAR",
     "String": "STRING_TYPE",
@@ -15,12 +18,16 @@ KEYWORDS = {
     "else": "ELSE",
     "while": "WHILE",
     "for": "FOR",
+    "break": "BREAK",
+    "continue": "CONTINUE",
     "return": "RETURN",
+    "new": "NEW",
+    "null": "NULL",
     "true": "BOOLEAN",
     "false": "BOOLEAN",
 }
 
-TYPE_TOKENS = {"INT", "FLOAT", "BOOLEAN_TYPE", "CHAR", "STRING_TYPE", "CLASS", "VOID"}
+TYPE_TOKENS = {"INT", "LONG", "FLOAT", "DOUBLE", "BOOLEAN_TYPE", "CHAR", "STRING_TYPE", "CLASS", "VOID"}
 
 symbol_table = []
 

@@ -132,7 +132,7 @@ with gr.Blocks(title="Lexical Analyzer (Scanner)") as demo:
 
     # Automatically run analysis whenever an example or file changes code_input
     code_input.change(
-        fn=lambda code: analyze_code(code, None),
+        fn=lambda code: analyze_code(code, None) if code and code.strip() else ([], [], ""),
         inputs=[code_input],
         outputs=[token_table_output, symbol_table_output, errors_output],
     )

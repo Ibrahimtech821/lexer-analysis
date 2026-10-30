@@ -49,7 +49,7 @@ def _scan_string(source_code, i, line, column):
             line, column = advance_pos(line, column, lexeme)
             return Token(lexeme, "STRING", start_line, start_column), i, line, column
         if char in "\r\n":
-            report_error(start_line, start_column, "unclosed string literal starting")
+            report_error(start_line, start_column, "unclosed string literal")
             lexeme = source_code[start_i:i]
             line, column = advance_pos(line, column, lexeme)
             return None, i, line, column
@@ -62,7 +62,7 @@ def _scan_string(source_code, i, line, column):
         else:
             i += 1
 
-    report_error(start_line, start_column, "unclosed string literal starting")
+    report_error(start_line, start_column, "unclosed string literal ")
     lexeme = source_code[start_i:i]
     line, column = advance_pos(line, column, lexeme)
     return None, i, line, column
@@ -77,7 +77,7 @@ def _scan_comment(source_code, i, line, column):
     else:
         end = source_code.find("*/", i + 2)
         if end == -1:
-            report_error(start_line, start_column, "unclosed comment starting")
+            report_error(start_line, start_column, "unclosed comment ")
             i = len(source_code)
         else:
             i = end + 2
